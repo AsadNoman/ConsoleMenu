@@ -4,10 +4,10 @@ namespace consolemenu
 {
 
     public class Menu{
-        private int rows;
+        private int rows, prev_rows;
         private int cur_row = 0;
         private string[] options;
-
+        public static bool numbered = true;
         public int rowdec(int cur_row){
             cur_row--;
             
@@ -22,51 +22,56 @@ namespace consolemenu
                     cur_row = 0;
                     return cur_row;
         }
-         public Menu(string[] strs){
-             rows = strs.Length;
+         public Menu(string[] strs, bool ? _numbered = true){
+             if(_numbered == false)
+                numbered = false;
+            Console.Write("\n\n");
+             prev_rows = Console.CursorTop;
+             rows =  strs.Length;
              options = strs;
              DrawMenu();
          }
 
          private void DrawMenu(){
+
              for(int i = 0; i < rows; i++)
-                 Console.Write("    {0}. {1}\n", i+1, options[i]);
+                 Console.Write("    {0}. {1}\n", (numbered ? (i+1).ToString() : " "), options[i]);
             
+         }
+
+         private void printArrow(){
+             Console.Write(' ');
+             Console.SetCursorPosition(2, prev_rows + cur_row);
+             Console.Write('>');
+             Console.SetCursorPosition(2, prev_rows +cur_row);
          }
 
          public string selectOption(){
              
-            Console.SetCursorPosition(2, cur_row);
+            Console.SetCursorPosition(2, prev_rows +cur_row);
             Console.Write('>');
-            Console.SetCursorPosition(2, cur_row);
+            Console.SetCursorPosition(2, prev_rows +cur_row);
             while (true)
             {
                 var keyInfo = Console.ReadKey();
                 if(keyInfo.Key == ConsoleKey.UpArrow)
                   {
                         cur_row = rowdec(cur_row);
-                        Console.SetCursorPosition(2, rowinc(cur_row));
-                        Console.Write(' ');
-                        Console.SetCursorPosition(2, cur_row);
-                        Console.Write('>');
-                        Console.SetCursorPosition(2, cur_row);
+                        Console.SetCursorPosition(2,prev_rows + rowinc(cur_row));
+                        printArrow();
                   }
                 else if(keyInfo.Key == ConsoleKey.DownArrow)
                    {
                        cur_row = rowinc(cur_row);
-                        Console.SetCursorPosition(2, rowdec(cur_row));
-                        Console.Write(' ');
-                        Console.SetCursorPosition(2, cur_row);
-                        Console.Write('>');
-                        Console.SetCursorPosition(2, cur_row);
-
+                        Console.SetCursorPosition(2,prev_rows + rowdec(cur_row));
+                        printArrow();
                    }
                 else
                     break;
 
             
             }
-            Console.SetCursorPosition(0, rows+1);
+            Console.SetCursorPosition(0, prev_rows + rows+1);
             return options[cur_row];
          }
 
