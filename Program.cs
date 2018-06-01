@@ -11,7 +11,7 @@ namespace consolemenu
             
 
             Menu m = new Menu(new string[]{"Cybernetics", "Coolnetics", "Dumbnetics", "Nonenetics", "Omninetics", "Onlynetics"}, true);
-
+            
             Console.Write("\n\nYou have selected:\t{0}", m.selectOption());
             Console.ReadKey();
         }

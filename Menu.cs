@@ -22,6 +22,10 @@ namespace consolemenu
                     cur_row = 0;
                     return cur_row;
         }
+
+        /// <summary> Create a menu
+        ///<para> give a string array of desired options as parameters</para>
+        /// </summary>
          public Menu(string[] strs, bool ? _numbered = true){
              if(_numbered == false)
                 numbered = false;
@@ -39,13 +43,21 @@ namespace consolemenu
             
          }
 
+        
+        /// <summary>
+        /// Key handling method
+        /// </summary>
          private void printArrow(){
              Console.Write(' ');
              Console.SetCursorPosition(2, prev_rows + cur_row);
              Console.Write('>');
              Console.SetCursorPosition(2, prev_rows +cur_row);
          }
-
+        
+        /// <summary>
+        /// Key handling method
+        /// <para> returns selected option as string</para>
+        /// </summary>
          public string selectOption(){
              
             Console.SetCursorPosition(2, prev_rows +cur_row);
