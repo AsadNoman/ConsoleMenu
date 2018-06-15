@@ -4,10 +4,33 @@ namespace consolemenu
 {
 
     public class Menu{
+        
+        /// <summary>
+        /// rows: Number of options
+        /// prev_rows: Stores the count of previously written rows
+        /// <para> The variables help avoiding writing over the previously written lines. </para>
+        /// </summary>
         private int rows, prev_rows;
+        
+        /// <summary>
+        /// Globally used for incrementing, decrementing and retrieving current row value.
+        /// </summary>
         private int cur_row = 0;
+        
+        /// <summary>
+        /// Stores inserted string array of options.
+        /// </summary>
         private string[] options;
+        
+        /// <summary>
+        /// Tells whether menu has to be ordered or not.
+        /// </summary>
         public static bool numbered = true;
+        
+        /// <summary>
+        /// Repeats indexes while decrementing
+        /// <para> Implemented as a handler for Index related excepetions. </para>
+        /// </summary>
         public int rowdec(int cur_row){
             cur_row--;
             
@@ -15,6 +38,11 @@ namespace consolemenu
                     cur_row = rows -1;
                     return cur_row;
         }
+        
+        /// <summary>
+        /// Repeats indexes while incrementing
+        /// <para> Implemented as a handler for Index related excepetions. </para>
+        /// </summary>
         public int rowinc(int cur_row){
             cur_row++;
             
@@ -24,7 +52,9 @@ namespace consolemenu
         }
 
         /// <summary> Create a menu
-        ///<para> give a string array of desired options as parameters</para>
+        ///<para> Draws menu for inserted options.</para>
+        /// <param name="strs"> Array of string desired as options for menu. </param>
+        /// <param name="_numbered"> Optional parameter to specify ordered or unordered menu. Default value true.</param>
         /// </summary>
          public Menu(string[] strs, bool ? _numbered = true){
              if(_numbered == false)
@@ -36,6 +66,10 @@ namespace consolemenu
              DrawMenu();
          }
 
+
+        /// <summary>
+        /// Does the writing.
+        /// </summary>
          private void DrawMenu(){
 
              for(int i = 0; i < rows; i++)
@@ -45,7 +79,7 @@ namespace consolemenu
 
         
         /// <summary>
-        /// Key handling method
+        /// Responding method for key presses. 
         /// </summary>
          private void printArrow(){
              Console.Write(' ');
@@ -55,7 +89,7 @@ namespace consolemenu
          }
         
         /// <summary>
-        /// Key handling method
+        /// Key handling method.
         /// <para> returns selected option as string</para>
         /// </summary>
          public string selectOption(){
